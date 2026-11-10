@@ -84,13 +84,13 @@ def test_per_mode_class_builds_and_computes_its_mode(name, mode, structure):
 
 
 @pytest.mark.parametrize(("mode", "options", "mutations"), [
-    ("singleresidue", ["--save_mutations"], True),
-    ("mutational", ["--save_mutations"], True),
-    ("configurational", [], False),  # its CLI has no --save_mutations
+    ("singleresidue", ["--run_dmfs"], True),
+    ("mutational", ["--run_dmfs"], True),
+    ("configurational", [], False),  # its CLI has no --run_dmfs
 ])
 def test_module_cli_writes_its_mode(tmp_path, mode, options, mutations):
     """Feature: each module CLI builds its per-mode class and writes the mode's frustration file and, with
-    --save_mutations, its mutation table."""
+    --run_dmfs, its mutation table."""
     cli = importlib.import_module(f"pytorch_frustratometer.algorithm.{mode}").cli
     args = ["-s", str(DATA / "1r69.pdb"), "-o", str(tmp_path), "--num_workers", "0", *options]
     output = CliRunner().invoke(cli, args)

@@ -35,6 +35,10 @@ import argparse
 import sys
 import os
 
+# Command-line diagnostic, not a pytest module: its test_* helpers take (model, batch, ...) arguments
+# supplied by main(), not fixtures, so pytest must not collect them.
+__test__ = False
+
 import torch
 import numpy as np
 import pandas as pd

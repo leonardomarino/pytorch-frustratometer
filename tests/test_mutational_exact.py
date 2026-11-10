@@ -244,7 +244,7 @@ def test_c_rand_statistics_are_moments_of_c_stream_decoys() -> None:
 def test_mutational_results_are_the_same_alone_and_with_other_modes() -> None:
     """Feature: one pipeline computes mutational frustration, so it gives the same results alone and next to the
     single-residue and configurational modes, which draw random numbers before it."""
-    settings = {"tert_frust_decoy_distribution": "pseudocount_exclude_native", "save_mutations": True}
+    settings = {"tert_frust_decoy_distribution": "pseudocount_exclude_native", "run_dmfs": True}
     first, *others = [run(model_for(mode, **settings))[0] for mode in ("mutational", "all")]
     for result in others:
         for key in ("mutational", "_mutational_native_energy", "_mutational_decoy_stats"):
@@ -254,9 +254,9 @@ def test_mutational_results_are_the_same_alone_and_with_other_modes() -> None:
 
 
 def test_saved_mutation_table_is_the_exact_table() -> None:
-    """Feature: save_mutations saves the pair table the exact statistics come from, column a * 20 + b holding the
+    """Feature: run_dmfs saves the pair table the exact statistics come from, column a * 20 + b holding the
     pair (a, b), so the saved table reproduces the reported decoy stats."""
-    model = model_for(save_mutations=True)
+    model = model_for(run_dmfs=True)
     result, batch = run(model)
     saved = result["_mutational_mutations"]
     B, _, E = batch["edge_index"].shape

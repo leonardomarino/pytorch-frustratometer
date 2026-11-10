@@ -883,7 +883,7 @@ class MutationalMixin:
             all_e   = mut_data["energies"][i].cpu().float()
             all_aas = mut_data["aas"].cpu()
             nat_e   = result["_mutational_native_energy"][i].cpu().float()
-            ei      = batch["edge_index"][i]
+            ei      = batch["edge_index"][i].cpu()  # all_e/nat_e are on CPU; a CUDA mask can't index them
             valid_e = (ei >= 0).all(dim=0)
             ei_v    = ei[:, valid_e]
             all_e   = all_e[valid_e]
